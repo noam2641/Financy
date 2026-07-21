@@ -3,6 +3,8 @@
 **Program:** AI Trading Decision Platform for US Equities — Phase 1 (Evidence Spine). Sources: agents A2 (PIT-data), A1 (validation methodology), A5 (execution/cost realism).
 **Research cutoff:** 2026-07-21. **Status:** Evidence + graded assessment only. Current-only metadata is never described as point-in-time historical data. Grades A/B/C/D/UNSUPPORTED per Phase-0 rules.
 
+> **PHASE 1.5 CORRECTION BANNER.** (1) **SIC is NOT a transparent replacement for GICS** — it is a *different* taxonomy that redefines the target and peer groups. Sector-classification is a **five-option owner decision** (paid PIT GICS / free PIT SIC-with-new-target / market-excess primary / absolute-return primary / sector-excess-as-secondary-diagnostic), fully compared in `PHASE_1_EVIDENCE_INTEGRITY_REVIEW.md` §4 (see §5 below, now scoped to that comparison). (2) **Not all adjusted data is invalid** — a **split multiplies prior prices by a constant that CANCELS in simple returns** but corrupts price *levels*; dividend/total-return adjustment corrupts *returns*. Use-by-use safe/unsafe matrix: integrity review §5. (3) **Cost figures are evidence-informed scenario ranges, not verified point estimates** (several source PDFs 403'd; `CLAIM_TO_SOURCE_TRACEABILITY.md` CLM-COST/CLM-TURN). (4) Provider claims graded on five dimensions in `SOURCE_EVIDENCE_REGISTER.md`.
+
 ---
 
 ## 1. Provider Assessment (design-time; repo has no data loaders)

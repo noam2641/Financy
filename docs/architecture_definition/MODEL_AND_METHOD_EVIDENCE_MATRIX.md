@@ -3,6 +3,8 @@
 **Program:** AI Trading Decision Platform for US Equities — Phase 1 (Evidence Spine). Sources: agents A3 (model-research), A4 (decision/portfolio), A1 (validation methods), with A5 (cost) on economic-value gating.
 **Research cutoff:** 2026-07-21. **Status:** Evidence + graded recommendation only. **No model is selected because research exists; every learned component carries a kill criterion and a simpler comparator.** Grades A/B/C/D/UNSUPPORTED per Phase-0 rules. Statistical significance ≠ economic tradeability.
 
+> **PHASE 1.5 CORRECTION BANNER.** (1) In §3, **DSR / PBO / CPCV are applicability-conditioned, not universal MVP_REQUIRED hard gates** — primary timeline is grouped-by-date purged walk-forward; DSR applies once a trial registry with multiple trials exists; PBO only when enough variants/partitions exist (`PBO_NOT_ESTIMABLE` is neither a pass nor proof of failure); CPCV is a robustness analysis. Applicability table + default hierarchy: `PHASE_1_EVIDENCE_INTEGRITY_REVIEW.md` §6. (2) **"Deterministic decision layer" does NOT mean a deterministic forecast model** — the base forecast is a **learned GBT + learned calibration/conformal** stack (nine-layer separation, integrity review §7). CLM-DETERM (deterministic policy ≻ learned aggregation) is a design **INFERENCE / EMPIRICAL_TBD** resolved by the challenger gate, not a permanent ban (`CLAIM_TO_SOURCE_TRACEABILITY.md`). (3) Multi-dimensional source grades: `SOURCE_EVIDENCE_REGISTER.md`.
+
 Status vocabulary: `MVP_REQUIRED` · `MVP_OPTIONAL` · `RESEARCH_CHALLENGER` · `DEFERRED` · `REJECTED (for MVP core)`.
 
 ---

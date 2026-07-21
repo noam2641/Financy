@@ -4,6 +4,8 @@
 **Repo audited:** `7c4c659` (docs-only). **Authoritative REQ-ID source:** `AI_TRADING_SYSTEM_CANONICAL_SPECIFICATION_V4.md` v4.6.
 **Status:** Initial reconciliation. This is **not** the final H (Phase 5) and does not itself correct canonical or companion docs — it classifies references so Phase-2 owner decisions and Phase-5 corrections can act. Canonical v4.6's own REQ-set was found internally clean (contiguous per prefix, no duplicate definitions).
 
+> **PHASE 1.5 CORRECTION BANNER — per-reference mapping classification.** Each §2 reference correction additionally carries: **mechanical vs substantive**, **mapping confidence**, and **owner-approval requirement** (ambiguous mappings are NOT auto-applied). Summary: `REQ-LBL→REQ-LAB` = **mechanical**, confidence high, no owner approval. `REQ-VAL-011..014`, `REQ-MOD-020..025`, `REQ-DEC-007..012`, `REQ-RISK-005..009`, `REQ-PORT-005..007` = **mechanical truncation** (confidence high) **unless** an over-range token implies a *missing* canonical requirement, in which case it is **substantive** (owner approval — see `DOCUMENT_AUTHORITY_AND_CONFLICT_MATRIX.md` CFL-02). `REQ-DATAQ-*`→`REQ-DQ-*` and `REQ-CP-*`→`REQ-GOV-009..012`(+REQ-DOC-010) = **substantive semantic remap**, confidence medium-high, **owner approval required** (CFL-03). Code references classified individually in §3 (not by count); `EXTERNAL_PROTOTYPE_REFERENCE` items are **preserved** as Phase-4 contract inputs. Root-document edits are **future patch proposals**, not applied in this pass.
+
 ---
 
 ## 1. Authoritative REQ-ID Inventory (extracted from v4.6, by definition site)
