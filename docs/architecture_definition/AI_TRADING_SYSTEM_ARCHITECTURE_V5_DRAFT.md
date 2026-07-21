@@ -7,6 +7,48 @@
 
 ---
 
+## 0. Phase 3.1 Precision Corrections (authoritative; supersede looser inline wording below)
+
+**0.1 Status model — two fields replace the single `STATUS` tag.**
+`decision_status ∈ {OWNER_APPROVED, EMPIRICAL_TBD, DEFERRED, REJECTED}` · `implementation_posture ∈ {BINDING, PROVISIONAL_DEFAULT, CHALLENGER, NOT_IN_SCOPE}`. A working default is **not** OWNER_APPROVED. An in-principle approval is BINDING only for the approved *principle*. Numerical values remain EMPIRICAL_TBD. Contracts may implement a PROVISIONAL_DEFAULT but must preserve replaceability and must not describe it as a final owner-selected component. Mapping of the earlier `OWNER_APPROVED(qualifier)` forms (this table governs every inline tag below):
+
+| ADR | Approved principle → (decision_status, posture) | Residual → (decision_status, posture) |
+| --- | --- | --- |
+| 001 | build order (OWNER_APPROVED, BINDING); validation methodology (OWNER_APPROVED, BINDING) | — |
+| 002 | falsifiable-thesis structure (OWNER_APPROVED, BINDING) | hurdle values (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) |
+| 003 | target bases (OWNER_APPROVED, BINDING) | — |
+| 004 | `expected_return_bps` basis (OWNER_APPROVED, BINDING) | — |
+| 005 | — | fixed-horizon exit (EMPIRICAL_TBD, PROVISIONAL_DEFAULT); barriers (DEFERRED, CHALLENGER) |
+| 006 | raw+as-of price basis (OWNER_APPROVED, BINDING) | — |
+| 007 | provider posture (OWNER_APPROVED, BINDING) | provider selection (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) |
+| 008 | PIT survivorship-safe universe (OWNER_APPROVED, BINDING) | — |
+| 009 | no gating sector taxonomy R0 (OWNER_APPROVED, BINDING) | SIC usability (EMPIRICAL_TBD, CHALLENGER); GICS (DEFERRED, NOT_IN_SCOPE) |
+| 010 | — | GBT primary (EMPIRICAL_TBD, PROVISIONAL_DEFAULT); pooled elastic-net comparator (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) |
+| 011 | deterministic-policy MVP (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) | learned aggregator (DEFERRED, CHALLENGER) |
+| 012 | λ FROZEN_ECONOMIC_PRIOR (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) | fitted λ (DEFERRED, CHALLENGER) |
+| 013 | validation applicability methodology (OWNER_APPROVED, BINDING) | numeric thresholds (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) |
+| 014 | round-trip cost structure (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) | cost/capacity numbers (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) |
+| 015 | minimal-kernel-owned principle (OWNER_APPROVED, BINDING) | exact entity set (EMPIRICAL_TBD, NOT_IN_SCOPE until Phase-4 matrix) |
+| 016 | two-tier reproducibility + `environment_hash` (OWNER_APPROVED, BINDING) | acceptance thresholds (EMPIRICAL_TBD, PROVISIONAL_DEFAULT) |
+| 017 | governance cap as internal policy (OWNER_APPROVED, BINDING) | legal-applicability (EMPIRICAL_TBD, NOT_IN_SCOPE) |
+| 018 | AI advisory boundary (OWNER_APPROVED, BINDING); **autonomous authority (REJECTED, NOT_IN_SCOPE)** | AI analysis value (EMPIRICAL_TBD, CHALLENGER) |
+
+**0.2 Release-0 forecast output & calibration.** Primary required output = **`expected_absolute_executable_return_bps`** (continuous regression forecast). Optional secondary = `probability_return_exceeds_cost_hurdle` (probability; EMPIRICAL_TBD/CHALLENGER, **not implicitly required**). Platt/isotonic apply **only** to a defined probability output; they are **not** generic calibration for a continuous return. Continuous-return calibration uses an explicitly named method — **residual/monotonic calibration, quantile calibration, or interval coverage**. Every calibrated output has its own target, fit set, calibration set, evaluation set, units, metric; calibration-fit and calibration-eval are disjoint and obey purge/embargo. **Resolution of the R1A-vs-R0-S6 mismatch:** in R0 there is **no required probability head** → `ECE = NOT_APPLICABLE_TO_PRIMARY_REGRESSION`; R0 uses regression coverage/residual-calibration metrics. Probability calibration (Platt/isotonic + ECE) belongs to R1A only, gated on a justified probability head.
+
+**0.3 Linear comparator (disambiguated).** (A) **Pooled historical-panel elastic-net** — fit on training dates only, evaluate grouped by test date — is the **required deployable comparator**. (B) **Fama–MacBeth-style diagnostic** — per-training-date cross-sectional coefficients aggregated over training dates only, frozen before test dates — is **optional diagnostic**. (C) **Per-date oracle** — fit on the test date — is **diagnostic-only and PROHIBITED** as a deployable/OOS baseline or promotion comparator.
+
+**0.4 Universe semantics — `FIXED_PIT_COHORT`.** R0 universe posture is a **`FIXED_PIT_COHORT`** with fields: `cohort_selection_date, universe_definition_version, eligibility_rule_version, constituent_source_id, source_as_of, instrument_id, inclusion_reason, exclusion_reason, terminal_event_policy`. Membership is selected using information available at `cohort_selection_date`; later delisted/merged/bankrupt names **remain**; later IPOs/newly-eligible names are **excluded by design**; R0 findings apply **only** to this fixed-cohort experiment and make **no dynamic-universe-robustness claim**. `DYNAMIC_PIT_ELIGIBILITY_UNIVERSE` is a later CHALLENGER (DEFERRED, NOT_IN_SCOPE for R0). Manual enumeration is permitted only as an **immutable signed manifest** with one provenance record per instrument, explicit delisting + identifier-history evidence, no construction from a current-only ticker list, reproducible from repository-approved source artifacts.
+
+**0.5 Purge & embargo — interval-based (replaces `embargo ≥ 14 + feature memory`).** Each sample exposes `feature_information_start, prediction_time, label_start, label_end, label_available_at, information_interval`. The splitter guarantees: no training information-interval overlaps a test information-interval; all cross-sectional rows sharing a `prediction_time` (date) stay in one group; all fit operations use training-only indices; an **additional embargo buffer is separately configured and justified** from label horizon + availability/publication delay + fold design + optional safety buffer. **Feature lookback alone is NOT automatically added as a forward embargo** unless an overlap analysis proves it necessary.
+
+**0.6 Corporate-action precision.** (a) A split-only constant back-adjustment leaves **simple returns unchanged when both endpoints are on the same side of the split**. (b) A **raw-price return spanning a split is invalid** without split handling. (c) A **label spanning a split must use the declared as-of split adjustment**. (d) **Dividends require an explicit `dividend_treatment`** and do **not** inherit the split exception. (e) **Price levels, filters, universe rules, support/resistance, and dollar volume never inherit** the simple-return exception.
+
+**0.7 Multiple-testing terminology.** Replace "DSR-adjusted hurdle" with **`applicable_multiple_testing_adjusted_hurdle`**: `trial_count` source = append-only trial registry; DSR applicability and PBO applicability are explicit; `NOT_ESTIMABLE` is **never a pass** and **never proof of failure**; lack of applicability is not failure. **DSR output is a statistical assessment (a deflated significance/probability), not an adjusted return amount.**
+
+**0.8 Benchmark & factor attribution are contract-bound (not implementation discretion).** The Phase-4 contracts must define: portfolio-return frequency; factor-regression window; factor set + source versions; intercept/alpha interpretation; robust/dependence-aware standard errors; matched-basket construction; long-only/short-leg policy; turnover matching; cost parity; beta matching; rebalance timing; benchmark eligibility; missing-factor behavior.
+
+---
+
 ## 1. Product Thesis & Falsification Model
 
 - **[V1.1 · ADR-001 · REQ-PROD-001..006 · OWNER_APPROVED · all · INVARIANT]** The platform is a point-in-time-safe decision system that decides / abstains / (later) executes-under-approval for long-only US equities at swing horizons of 5, 8, and 14 exchange sessions. Its deliverable value is a **disciplined, auditable go/no-go**, not model breadth.
@@ -42,14 +84,14 @@
 
 ## 6. Universe & Instrument Identity
 
-- **[V6.1 · ADR-008 · REQ-DOM-015..019 · OWNER_APPROVED · all · INVARIANT]** The universe is constructed **point-in-time as-of backtest-start**, including securities later delisted/merged/bankrupt; membership is frozen from that date.
+- **[V6.1 · ADR-008 · REQ-DOM-015..019 · OWNER_APPROVED · all · INVARIANT]** The R0 universe posture is a **`FIXED_PIT_COHORT`** (§0.4) constructed **point-in-time as-of `cohort_selection_date`**, including securities later delisted/merged/bankrupt and excluding later IPOs by design; membership is frozen from that date and R0 makes no dynamic-universe-robustness claim.
 - **[V6.2 · ADR-008 · REQ-DOM-015/016 · OWNER_APPROVED · all · INTERFACE]** The canonical key is an **opaque `instrument_id`** (never derived from ticker); an `instrument_identifier_history` resolves ticker/CIK/FIGI as-of date; **ticker-only joins are prohibited**.
 - **[V6.3 · ADR-008 · REQ-LAB-013 · OWNER_APPROVED · all · INTERFACE]** Delisting/merger/bankruptcy produce **terminal-event returns**; they never become silently missing labels.
 - **[V6.4 · ADR-009 · REQ-LAB-006/009 · OWNER_APPROVED(deferral) · R0 · POLICY]** **No sector taxonomy is a gating dependency in R0.** PIT GICS is deferred pending an explicit value+licensing decision; SIC is not a transparent GICS substitute; SIC usability is EMPIRICAL_TBD.
 
 ## 7. Validation-Method Applicability
 
-- **[V7.1 · ADR-001/013 · REQ-VAL-001/002 · OWNER_APPROVED · R0 · INVARIANT]** Primary timeline = **grouped-by-date purged walk-forward**; **embargo ≥ the maximum information interval** (≥ 14 sessions + feature memory); purge is bidirectional over the cross-sectional date union.
+- **[V7.1 · ADR-001/013 · REQ-VAL-001/002 · OWNER_APPROVED · R0 · INVARIANT]** Primary timeline = **grouped-by-date purged walk-forward**, made precise as the **interval-based purge of §0.5** (no training information-interval overlaps a test information-interval; same-`prediction_time` rows share one group). The **embargo buffer is separately configured and justified** from label horizon + availability/publication delay + fold design (feature lookback alone is not auto-added as forward embargo unless an overlap analysis requires it). Purge acts over the cross-sectional date union.
 - **[V7.2 · ADR-001/013 · REQ-VAL-008 · OWNER_APPROVED · R0 · POLICY]** A **trial registry is mandatory** (every config/seed/horizon/target/grid point; any value chosen after viewing a backtest is a trial).
 - **[V7.3 · ADR-013 · REQ-VAL-008 · OWNER_APPROVED · R0 · POLICY]** **Deflated Sharpe Ratio** is required **when multiple strategy/model trials exist**; **PBO/CSCV** is required **only when enough variants and partitions exist** (`PBO_NOT_ESTIMABLE` is neither a pass nor proof of failure); **CPCV** is a robustness analysis when its assumptions/sample support it. No method is claimed estimable when its prerequisites are absent.
 - **[V7.4 · ADR-013 · REQ-VAL-004/005/006 · OWNER_APPROVED · R0 · POLICY]** Edge gate = **factor-attributed residual net-of-cost significance** + outperformance of an **investable benchmark** (buy-and-hold SPY + matched basket, beta-adjusted, net of the same cost model); metrics use **effective-sample** (non-overlapping/block-bootstrap) inference, not raw row counts.
@@ -57,8 +99,8 @@
 
 ## 8. Baseline Model Strategy
 
-- **[V8.1 · ADR-010/011 · REQ-MOD-001/002 · OWNER_APPROVED(working default) · R0/R1A · INTERFACE]** Base forecast = **gradient-boosted trees (LightGBM/XGBoost)** as the primary learned predictor; **elastic-net + per-date cross-sectional regression** as the comparator/naive baseline.
-- **[V8.2 · ADR-010 · REQ-MOD-003/005 · OWNER_APPROVED(working default) · R1A · INTERFACE]** Probability outputs pass an **isotonic/Platt calibration** layer (GBT is natively miscalibrated); intervals via **quantile regression / conformal (CQR)**, with coverage validated under time-series (non-exchangeable) conditions and calibration sets that obey purge/embargo.
+- **[V8.1 · ADR-010/011 · REQ-MOD-001/002 · OWNER_APPROVED(working default) · R0/R1A · INTERFACE]** Base forecast = **gradient-boosted trees (LightGBM/XGBoost)** as the primary learned predictor; the deployable comparator is the **pooled historical-panel elastic-net** disambiguated in **§0.3-A** (a per-date oracle is PROHIBITED as an OOS baseline, §0.3-C).
+- **[V8.2 · ADR-010 · REQ-MOD-003/005 · OWNER_APPROVED(working default) · R1A · INTERFACE]** Calibration is **output-specific per §0.2**: **isotonic/Platt + ECE apply only to a defined probability output** (GBT probability heads are natively miscalibrated); the continuous primary target (`expected_absolute_executable_return_bps`) uses residual/monotonic, quantile, or interval-coverage calibration, and in R0 records `ECE = NOT_APPLICABLE_TO_PRIMARY_REGRESSION`. Intervals via **quantile regression / conformal (CQR)**, with coverage validated under time-series (non-exchangeable) conditions and calibration sets that obey purge/embargo.
 - **[V8.3 · ADR-010 · REQ-MOD-008 · OWNER_APPROVED(working default) · R1A/R2 · INTERFACE]** **Learning-to-rank (LambdaMART)** is the first ranking challenger (objective is cross-sectional ordering).
 - **[V8.4 · ADR-011 · REQ-CONV-MOD-005/007, REQ-REL4-002 · DEFERRED · R4 · POLICY]** All deep/sequence/graph/LLM/multimodal models are **Release-4 replaceable challengers** that must beat the calibrated tabular baseline net-of-cost under identical PIT/cost/CPCV rules; they are never MVP dependencies.
 
