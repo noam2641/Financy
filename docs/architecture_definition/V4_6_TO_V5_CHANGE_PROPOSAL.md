@@ -1,0 +1,33 @@
+# v4.6 → v5 Change Proposal (DRAFT)
+
+**Purpose:** enumerate the deltas from canonical v4.6 to the proposed v5 draft, each tied to a ratified owner decision. **Canonical v4.6 is NOT modified by this document** — these are proposed amendments for a future owner-approved v5. Type ∈ {MECHANICAL, SUBSTANTIVE, EXTENSION, CLARIFICATION}. "Amend canonical?" = whether adopting v5 requires changing v4.6 text.
+
+| # | Area / v4.6 REQ | v4.6 says | v5 proposes (ref) | Source decision | Type | Status | Amend canonical? |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| C-01 | REQ-LAB-006 primary target | default `sector_excess_return_h` | primary = **ABSOLUTE_EXECUTABLE_RETURN**; market-excess secondary-ranking; sector-excess secondary diagnostic (V4.1) | ADR-003 | SUBSTANTIVE | OWNER_APPROVED | **Yes** (REQ-LAB-006) |
+| C-02 | REQ-DEC-001 | `expected_return_bps` basis unspecified | pin to **ABSOLUTE_EXECUTABLE_RETURN_BPS** (V4.2) | ADR-004 | SUBSTANTIVE | OWNER_APPROVED | **Yes** (REQ-DEC-001 note) |
+| C-03 | REQ-LAB-001 | label formula, no `price_basis` | add explicit `price_basis` bound to `target_definition_version` (V5.2) | ADR-006 | SUBSTANTIVE | OWNER_APPROVED | **Yes** (REQ-LAB-001) |
+| C-04 | REQ-PRICE-001..006 | raw/split/total-return distinguished | add **as-of** (`ex_date ≤ cutoff`) derivation rule + prohibit current-vintage back-adjusted for levels/filters/universe/labels; preserve split-only-return exception (V5.1/V5.3) | ADR-006 | EXTENSION | OWNER_APPROVED | Yes (add rule) |
+| C-05 | REQ-TIME-006 | two replay classes | pre-go-live = **INFORMATION_THEORETIC only**; SYSTEM_REALISTIC forward-only; ban fabricated `system_available_at` (V5.4) | ADR-007 | CLARIFICATION | OWNER_APPROVED | Yes (note) |
+| C-06 | REQ-CONV-DATA-008 | yfinance research adapter allowed | yfinance **prototyping-only**; provider-neutral adapters; **provider-promotion decision rule**; production-authorized source before PAPER/LIVE; licensing not an automatic SHADOW blocker (V5.4, §11) | ADR-007 | EXTENSION | PARTIALLY OWNER_APPROVED | No (extends) |
+| C-07 | REQ-DOM-017 | PIT universe; "static" R0 wording | R0 universe built **as-of start incl. later-delisted**; opaque `instrument_id`; ban ticker joins (V6.1–V6.3) | ADR-008 | CLARIFICATION | OWNER_APPROVED | Yes (tighten REQ-REL0-001 wording) |
+| C-08 | REQ-LAB-006/009 sector | sector-excess needs PIT GICS | **no sector taxonomy gating in R0**; GICS deferred; SIC ≠ substitute; SIC usability EMPIRICAL_TBD (V6.4) | ADR-009 | SUBSTANTIVE | OWNER_APPROVED (deferral) | Yes (REQ-LAB-006/009) |
+| C-09 | REQ-VAL-001/002 | purged WF + embargo | bind **embargo ≥ max information interval**; bidirectional purge on date union (V7.1) | ADR-013 | EXTENSION | OWNER_APPROVED | Yes (REQ-VAL-001) |
+| C-10 | REQ-VAL-008 | PBO/CSCV; may be `PBO_NOT_ESTIMABLE` | add **trial registry (mandatory)** + **DSR (when multiple trials)**; PBO only when estimable; CPCV robustness; not-estimable ≠ pass/fail (V7.2/V7.3) | ADR-013 | EXTENSION | OWNER_APPROVED | Yes (REQ-VAL) |
+| C-11 | REQ-VAL-004 | baseline comparison | add **factor-attribution edge gate** + **investable benchmark** + effective-sample inference (V7.4) | ADR-013 | EXTENSION | OWNER_APPROVED | Yes (REQ-VAL-004) |
+| C-12 | REQ-MOD-002 | shared cross-sectional model (unnamed) | name baseline: **GBT primary + elastic-net comparator + isotonic/Platt + conformal/CQR + LambdaMART challenger** (§8) | ADR-010 | EXTENSION | OWNER_APPROVED (working default) | No (names open choice) |
+| C-13 | REQ-DEC-002 | λ versioned, no fitting protocol | **policy-weight classes**; λ = FROZEN_ECONOMIC_PRIOR for MVP; post-backtest choices trial-registered (V9.2) | ADR-012 | EXTENSION | OWNER_APPROVED (working default) | Yes (REQ-DEC-002 note) |
+| C-14 | R1A-BL-002 | ~34-entity aggregate as RELEASE_BLOCKER | minimal kernel-owned set via **producer/consumer/entity matrix**; no frozen count; defer advanced entities (§12) | ADR-015 | SUBSTANTIVE | OWNER_APPROVED (in principle) | Yes (backlog R1A-BL-002) |
+| C-15 | REQ-DOM-032 | evidence-dependency graph | defer to R2A (one expert in R1A) (V12.3) | ADR-015 | SUBSTANTIVE | OWNER_APPROVED | Yes (backlog/canonical note) |
+| C-16 | REQ-COST-001 | entry-centric cost | **round-trip** cost incl. exit/close-auction leg; √-impact; PROXY numeric floor (§11) | ADR-014 | EXTENSION | OWNER_APPROVED (working default) | Yes (REQ-COST-001) |
+| C-17 | REQ-RISK-002/004 | size = risk-budget / stop-distance | add **gap-tail cap** (size to worst-case gap) (V10.1) | ADR-014 | EXTENSION | OWNER_APPROVED (working default) | Yes (REQ-RISK-004) |
+| C-18 | R0-BL-002 vs REQ-GATE-001 | "reproduce artifact hashes" vs "0 or approved tolerance" | **two-tier reproducibility** (V14.2); define `environment_hash` (V14.3) | ADR-016 | CLARIFICATION | OWNER_APPROVED | Yes (align backlog) |
+| C-19 | REQ-LLM-001..005 | LLM guardrails | tighten: AI = **advisory/analysis only, non-authoritative**; hard boundaries; response-provenance fields; autonomous authority **REJECTED** (§13) | ADR-018 | EXTENSION | OWNER_APPROVED (boundary) | Yes (tighten REQ-LLM) |
+| C-20 | REQ-GOV-001/002, REQ-KILL-001 | roles + solo exception + two-person reset | **internal-policy** solo cap at SHADOW; external reviewer + second resetter before PAPER/LIVE; obtain legal-applicability determination (V16.3) | ADR-017 | POLICY | OWNER_APPROVED (internal policy) | No (policy note) |
+| C-21 | REQ-LBL/DATAQ/CP + over-ranges (companion docs) | non-resolving IDs | correct per H1: `REQ-LBL→REQ-LAB` (mechanical), truncate over-ranges, remap `REQ-DATAQ→REQ-DQ` / `REQ-CP→REQ-GOV-009..012` (substantive, owner-gated) | H1 / CFL-01/02/03 | MECHANICAL + SUBSTANTIVE | OWNER_APPROVAL_REQUIRED (substantive remaps) | Backlog/testing/matrix only (not canonical) |
+| C-22 | REQUIREMENT_TO_CODE_COVERAGE_MATRIX | implemented-statuses on absent code | reset code rows to DOCUMENTED/DESIGNED; label EXTERNAL_PROTOTYPE_REFERENCE (H1 §3) | CFL-04 | SUBSTANTIVE (status) | recommended | Coverage-matrix only |
+
+## Notes
+- **No v4.6 text is edited by this proposal.** Items marked "Amend canonical? Yes" are staged for a future owner-approved v5 adoption; the readiness gate lists which can proceed as *proposed v5 meaning* without blocking R0 implementation.
+- Root-document corrections (C-21/C-22) target companion/backlog/matrix docs, not canonical; substantive REQ-ID remaps require owner approval before application.
+- Everything marked EMPIRICAL_TBD in the v5 draft (§15) carries a provisional default from `OPEN_DECISIONS_ASSUMPTIONS_AND_EXPERIMENTS.md` and does not block adoption of the surrounding architecture.
