@@ -20,10 +20,15 @@ SUPPORTED_HORIZONS: tuple[int, ...] = (5, 8, 14)
 class ExchangeCalendar(Protocol):
     """Smallest calendar surface FN-R0-12 requires.
 
-    `sessions` is the ascending sequence of trading-session dates. The counting
-    function reads it and never mutates it. Adapters from an approved live
-    calendar source are a later task, not TASK-R0-01.
+    `calendar_id` is the pinned calendar identity (a reproducibility field per
+    FN-R0-12). `sessions` is the ascending sequence of trading-session dates.
+    The counting function reads the sequence and never mutates it. Adapters from
+    an approved live calendar source are a later task, not TASK-R0-01.
     """
+
+    @property
+    def calendar_id(self) -> str:
+        ...
 
     @property
     def sessions(self) -> Sequence[date]:
@@ -40,6 +45,15 @@ class NotASessionError(ValueError):
 
 class UnsupportedHorizonError(ValueError):
     """Raised when `horizon` is not one of SUPPORTED_HORIZONS."""
+
+
+class InvalidCalendarDefinitionError(ValueError):
+    """Raised when a calendar lacks a pinned, non-empty `calendar_id`.
+
+    The identity is a reproducibility field (FN-R0-12); an anonymous or empty
+    `calendar_id` must be rejected at the construction boundary, not silently
+    accepted.
+    """
 
 
 def count_exchange_sessions(
