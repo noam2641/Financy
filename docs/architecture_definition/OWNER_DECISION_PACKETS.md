@@ -6,6 +6,22 @@
 
 ---
 
+## OWNER RATIFICATION — ROUND 1 (authoritative status per packet)
+Recorded per explicit owner decision (full binding notes in `ARCHITECTURE_DECISION_REGISTER.md` → "OWNER RATIFICATION — ROUND 1").
+- **PKT-1 OWNER_APPROVED** (+ validation clarification: trial registry & purged WF mandatory; DSR when multiple trials; PBO when enough variants/partitions; CPCV robustness; nothing "estimable" without prerequisites).
+- **PKT-2 STRUCTURE OWNER_APPROVED; VALUES EMPIRICAL_TBD** (thesis required; numeric hurdles not frozen).
+- **PKT-3 OWNER_APPROVED** (primary=ABSOLUTE_EXECUTABLE_RETURN; secondary ranking=MARKET_EXCESS_RETURN; diagnostic=SECTOR_EXCESS_RETURN; never mixed).
+- **PKT-4 OWNER_APPROVED** (`expected_return_bps`=ABSOLUTE_EXECUTABLE_RETURN_BPS).
+- **PKT-6 OWNER_APPROVED** (raw immutable OHLCV + versioned CAs + as-of adjustment + explicit price_basis; split-only simple-return exception preserved).
+- **PKT-7 PARTIALLY OWNER_APPROVED** (posture approved; licensed vendor NOT an automatic SHADOW blocker; provider-promotion decision rule; production-authorized source before PAPER/LIVE).
+- **PKT-8 OWNER_APPROVED** (PIT universe incl. delisted; opaque instrument_id; no ticker joins).
+- **PKT-9 OWNER_APPROVED WITH DEFERRAL** (no gating sector taxonomy R0; sector-excess secondary; GICS deferred; SIC not a substitute; SIC usability EMPIRICAL_TBD).
+- **PKT-15 OWNER_APPROVED IN PRINCIPLE** (minimal kernel-owned set; do NOT freeze "~10"; Phase-3 producer/consumer/entity matrix; preserve monolith/kernel/feature_snapshot/ledger/cohort-logging; defer evidence-DAG/world-hypothesis/opportunity-analytics/KG/counterfactual-factory/autonomous-LLM).
+- **Non-blocking, carried with working defaults (not elevated):** PKT-5 (pure fixed-horizon exit) · PKT-10 (GBT+elastic-net) · PKT-11 (deterministic policy, learned forecast) · PKT-12 (λ FROZEN_ECONOMIC_PRIOR MVP) · PKT-13 (methodology owner-approved via PKT-1; thresholds EMPIRICAL_TBD) · PKT-14/16 (EMPIRICAL_TBD) · PKT-17 (INTERNAL_POLICY_CHOICE) · PKT-18 (advisory-only; autonomous authority REJECTED — owner-affirmed; value EMPIRICAL_TBD).
+The per-packet bodies below retain their original analysis; this banner is the authoritative post-ratification status.
+
+---
+
 ## PKT-1 — Build order & edge-probe (ADR-001)
 - **Canonical position:** a full Decision-OS with a Counterfactual Learning Factory as the product identity (REQ-PROD-003); baseline forecast is built last (R0-BL-006/Stage-6).
 - **Phase-1 research position:** build a *rigorous Edge Probe* (survivorship-safe PIT universe → labels → purged WF → cost model → one GBT baseline → DSR/PBO vs an investable benchmark) **before** any world-model/graph/opportunity/counterfactual work.

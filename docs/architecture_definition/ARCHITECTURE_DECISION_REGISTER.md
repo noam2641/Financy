@@ -6,6 +6,27 @@
 
 ---
 
+## OWNER RATIFICATION — ROUND 1 (authoritative; supersedes the per-ADR `Status:` fields below where different)
+
+Recorded per explicit owner decision. **Structural/policy approvals are OWNER_APPROVED; numerical values remain EMPIRICAL_TBD** (an approved *structure* does not imply a resolved *number*).
+
+| ADR / PKT | Ratified status | Binding notes |
+| --- | --- | --- |
+| **ADR-001 / PKT-1** | **OWNER_APPROVED** (+ validation clarification) | Hybrid build order: rigorous Release-0 Edge Probe on Truth-Kernel foundations before world-model/graph/evidence-DAG/counterfactual-factory/autonomous-LLM/broader platform. Probe must stay PIT-/survivorship-/cost-aware, deterministic, auditable — smaller build order, **not** low-rigor. **Validation:** trial registry mandatory; grouped-by-date purged walk-forward mandatory; **DSR required when multiple trials exist**; **PBO required only when enough variants+partitions exist**; **CPCV = robustness when assumptions+sample support it**; no method claimed estimable when prerequisites are absent. |
+| **ADR-002 / PKT-2** | **STRUCTURE OWNER_APPROVED; VALUES EMPIRICAL_TBD** | Falsifiable edge thesis required (opportunity type, mechanism, direction + plausible effect-size band, half-life+capacity hypothesis, explicit falsifier, `BLOCKED_NO_EDGE`, pre-registration before final-holdout access). **Numerical hurdles NOT frozen** — need conservative provisional range + source rationale + decision rule + freeze point + owner approval before final-holdout access. |
+| **ADR-003 / PKT-3** | **OWNER_APPROVED** | Primary economic/trading forecast target = **ABSOLUTE_EXECUTABLE_RETURN**; secondary research/ranking = **MARKET_EXCESS_RETURN**; secondary non-gating diagnostic = **SECTOR_EXCESS_RETURN**. Sector-excess must NOT be the primary traded objective; all bases preserved explicitly and never mixed. |
+| **ADR-004 / PKT-4** | **OWNER_APPROVED** | `expected_return_bps` in `economic_edge_bps` pinned to **ABSOLUTE_EXECUTABLE_RETURN_BPS**; only this basis may have absolute transaction costs subtracted. |
+| **ADR-006 / PKT-6** | **OWNER_APPROVED** | Immutable raw tradable OHLCV; versioned corporate-action records; as-of adjustment (actions known by cutoff only); explicit `price_basis` on every label/analytical series; current-vintage back-adjusted data **prohibited** for price levels, filters, universe construction, labels; split-only simple-return exception preserved where mathematically valid. |
+| **ADR-007 / PKT-7** | **PARTIALLY OWNER_APPROVED** | Approved: provider-neutral adapters; yfinance prototyping-only; INFORMATION_THEORETIC replay for historical research; forward recording of ingestion/availability timestamps; EDGAR as-filed + ALFRED vintages; independent corporate-action/identifier-history/delisting handling. **Licensed-vendor purchase is NOT an automatic blocker to beginning SHADOW.** A separate **provider-promotion decision rule** governs selection (licensing/permitted-use, historical coverage, delistings+identifier history, corporate actions, revision/vintage support, reliability/SLA, replay needs, measured cost). A production-authorized source must be selected before PAPER/LIVE (earlier if SHADOW operational terms require). |
+| **ADR-008 / PKT-8** | **OWNER_APPROVED** | PIT universe; later-delisted/merged included; opaque `instrument_id` as canonical key; identifier-history; terminal-event returns; no ticker-only joins. |
+| **ADR-009 / PKT-9** | **OWNER_APPROVED WITH DEFERRAL** | Release 0: no sector taxonomy may be a gating dependency; sector-excess = secondary diagnostic only; PIT GICS **deferred** pending explicit value+licensing decision; SIC **not** a transparent GICS substitute; **SIC usability remains EMPIRICAL_TBD**. |
+| **ADR-015 / PKT-15** | **OWNER_APPROVED IN PRINCIPLE** | Minimal Release-1A kernel-owned entity set approved; **do NOT freeze "~10" as a normative count** — Phase 3 builds a producer/consumer/entity matrix; include only entities written by the R1A Decision Kernel, read by a required R1A component, or needed for auditability/feature-snapshots/decisions/risk/ledger. Preserve: modular monolith, small Decision Kernel, `feature_snapshot`, append-only decision ledger, cohort/outcome logging. Defer: evidence-dependency graph, world-hypothesis engine, opportunity-analytics platform, knowledge graph, counterfactual learning factory, autonomous LLM. |
+| **ADR-013 / PKT-13** | **METHODOLOGY OWNER_APPROVED (via PKT-1); THRESHOLDS EMPIRICAL_TBD** | Applicability-conditioned validation hierarchy ratified by the PKT-1 validation clarification; numerical acceptance thresholds remain EMPIRICAL_TBD. |
+
+**Non-blocking posture — carried into Phase 3 with owner-accepted working defaults (NOT elevated to OWNER_APPROVED):** ADR-005 (Edge-Probe default = pure fixed-horizon exit) · ADR-010 (GBT primary + elastic-net comparator) · ADR-011 (deterministic decision policy; learned forecast allowed) · ADR-012 (utility weights FROZEN_ECONOMIC_PRIOR for MVP) · ADR-014 (cost/capacity params EMPIRICAL_TBD) · ADR-016 (acceptance thresholds EMPIRICAL_TBD) · ADR-017 (governance = INTERNAL_POLICY_CHOICE until separately approved) · ADR-018 (AI/LLM advisory/analysis-only; **autonomous decision authority REJECTED — owner-affirmed**; value EMPIRICAL_TBD).
+
+---
+
 ### ADR-001 — Build order & edge-probe scope
 - **Question:** Build the full platform first, or a rigorous Edge Probe (ARCH-A) before any §3.7–3.10 / §23 work?
 - **REQ IDs:** REQ-REL0-001, REQ-REL4-003, REQ-PROD-020, R0-BL-006. **Gates:** release_0_definition, release_0_acceptance.
@@ -165,5 +186,5 @@
 
 ---
 
-## Summary
-18 decisions. **Status counts:** OWNER_APPROVAL_REQUIRED 11 · PROPOSED_RECOMMENDATION 4 · EMPIRICAL_TBD (primary or joint) 6 (ADR-002/009/011/014/016/018) · DEFERRED 0 · REJECTED 0 (autonomous-AI-authority rejected within ADR-018) · **OWNER_APPROVED 0**. **cross_doc_status:** CONFLICT_REQUIRES_OWNER_DECISION 5 (ADR-001/003/004/009/015) · EXTENSION_ONLY 8 · TENSION_REQUIRES_CLARIFICATION 2 · EMPIRICAL_TBD (as joint) 5 · CONSISTENT 1. Highest-leverage first: ADR-001, ADR-003/004, ADR-002, ADR-009, ADR-007, ADR-015 (see OWNER_DECISION_PACKETS.md ordering).
+## Summary (post Owner Ratification Round 1)
+18 decisions. **Owner-approved (structure/policy):** 10 — ADR-001, 003, 004, 006, 008 (full), ADR-002 (structure), ADR-007 (partial), ADR-009 (with deferral), ADR-015 (in principle), ADR-013 (methodology, via PKT-1). **Still EMPIRICAL_TBD on numbers/values:** 6 — ADR-002 (hurdles), 009 (SIC usability), 011 (learned-challenger gate), 014 (cost/capacity), 016 (acceptance thresholds), 018 (AI value). **Carried non-blocking working defaults (not elevated):** ADR-005, 010, 011, 012, 014, 016, 017, 018. **Owner-affirmed REJECTED:** autonomous AI decision authority (within ADR-018). **cross_doc_status** unchanged from initial classification. Highest-leverage owner-review order preserved in `OWNER_DECISION_PACKETS.md`. Blockers for Phase 3 are now cleared for the ratified set; residual EMPIRICAL_TBDs carry provisional defaults (`OPEN_DECISIONS_ASSUMPTIONS_AND_EXPERIMENTS.md` §5/§8).

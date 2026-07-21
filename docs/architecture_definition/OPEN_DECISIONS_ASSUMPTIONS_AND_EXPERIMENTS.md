@@ -4,6 +4,9 @@ Companion to `ARCHITECTURE_DECISION_REGISTER.md` (ADR-###) and `OWNER_DECISION_P
 
 ---
 
+## 0. Owner Ratification Round 1 (status update)
+Per explicit owner decision: **OWNER_APPROVED** — ADR-001 (build order + validation clarification), ADR-003 (target bases: absolute-executable primary / market-excess secondary-ranking / sector-excess diagnostic), ADR-004 (`expected_return_bps`=absolute-executable), ADR-006 (raw+as-of price basis), ADR-008 (PIT survivorship-safe universe); **structure OWNER_APPROVED** — ADR-002; **partial** — ADR-007; **with deferral** — ADR-009; **in principle** — ADR-015; **methodology owner-approved (via PKT-1)** — ADR-013. **Still EMPIRICAL_TBD (numbers/values):** ADR-002 hurdles, ADR-009 SIC usability, ADR-011 learned-challenger gate, ADR-014 cost/capacity, ADR-016 thresholds, ADR-018 AI value — all carry the provisional defaults in §5 and the experiments in §6. Non-blocking items (§ADR-005/010/011/012/017/018) carried with owner-accepted working defaults. **Phase-3 blocker set (§8) is now cleared** for the ratified decisions; residual EMPIRICAL_TBDs proceed on provisional defaults + decision rules.
+
 ## 1. Decisions resolvable NOW by evidence + existing authority (recommend, then confirm)
 These are low-ambiguity given canonical authority + Phase-1 evidence; the owner can ratify quickly.
 - **Mechanical traceability corrections** (ADR-none / H1): `REQ-LBL→REQ-LAB`; truncate over-range VAL/MOD/DEC/RISK/PORT tokens; coverage-matrix status reset to repo-truth. *(mechanical; CFL-01/02/04)*
