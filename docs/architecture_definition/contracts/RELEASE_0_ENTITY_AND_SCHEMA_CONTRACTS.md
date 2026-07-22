@@ -4,6 +4,8 @@
 
 Two-field status model (v5 §0.1) applies. Each entity contract assesses: id · name · owning_module (FC) · allowed_writer · readers · immutability · PIT role · key fields (name:type:units/basis) · identity key · versioning · determinism · lineage · leakage risks + mitigation · v5/§0 refs · v4.6 REQ · ADR · decision_status · posture · required tests. All entity **schemas** are defined in FC-R0-02 (`core/entities.py`); the "owning_module" is the runtime **writer** module.
 
+**Enum-vocabulary representation rule (R0).** An `enum` field whose closed value set is written explicitly in braces (e.g. `{5,8,14}`, `{MATURED,NOT_MATURED,TERMINAL_EVENT}`) is a **closed vocabulary for R0** — no other values are permitted. A field described as `enum` **without** a frozen brace-listed value set is an open placeholder: its concrete vocabulary is finalized by the owning writer task or a later explicit contract revision, and arbitrary values must **not** be invented during implementation. This errata prescribes neither libraries nor a dataclass/Pydantic representation.
+
 ---
 
 ### ENT-R0-01 SourceRecord
@@ -78,7 +80,9 @@ Two-field status model (v5 §0.1) applies. Each entity contract assesses: id · 
 
 ### ENT-R0-11 InformationInterval
 - **owning/writer:** FC-R0-12 · **readers:** FC-R0-12 (splitter) · **immutability:** derived · **PIT role:** per-sample information-time envelope (§0.5).
-- **key fields (§0.5):** `feature_information_start:date`, `prediction_time:datetime`, `label_start:date`, `label_end:date`, `label_available_at:datetime`, `information_interval:[date,date]`.
+- **identity/context fields (not information-time boundaries):** `instrument_id:str`, `horizon_sessions:enum/int constrained to {5,8,14}`.
+- **information-time fields — the exact §0.5 six-field set:** `feature_information_start:date`, `prediction_time:datetime`, `label_start:date`, `label_end:date`, `label_available_at:datetime`, `information_interval:[date,date]`.
+- **field-set clarification:** the six §0.5 fields above remain the exact information-time field set; `instrument_id` and `horizon_sessions` are identity/context fields, **not** additional information-time boundaries. The entity therefore carries two identity/context fields **plus** the exact six §0.5 information-time fields (eight fields total); the "six-field set" refers **only** to the §0.5 information-time fields. No purge/embargo semantics change.
 - **identity:** (`instrument_id`,`prediction_time`,`horizon_sessions`) · **determinism:** BIT_EXACT · **lineage:** ENT-R0-09, ENT-R0-10.
 - **leakage:** basis of the no-overlap guarantee (VAL-R0-02); embargo buffer separately justified (VAL-R0-03).
 - **status:** OWNER_APPROVED · BINDING · **tests:** R0-REQ-23/25. · **refs:** §0.5; REQ-VAL-001/002; ADR-013.
@@ -127,7 +131,9 @@ Two-field status model (v5 §0.1) applies. Each entity contract assesses: id · 
 
 ### ENT-R0-18 FactorAttributionResult
 - **owning/writer:** FC-R0-18 · **readers:** FC-R0-21 · **immutability:** immutable per run · **PIT role:** residual-alpha evidence.
-- **key fields (§0.8):** `return_frequency`, `regression_window`, `factor_set:list{Mkt,SMB,HML,UMD,STRev,BAB}`, `factor_source_versions`, `alpha_interpretation`, `standard_error_method(dependence-aware)`, `matched_basket_ref`, `long_short_leg_policy`, `turnover_matching`, `cost_parity_ref`, `beta_matching`, `rebalance_timing`, `benchmark_eligibility`, `missing_factor_behavior`, `residual_alpha_bps`, `residual_alpha_significance`.
+- **identity/context field:** `run_id:str` (the per-run identity/context field; `factor_source_versions` below is the second identity component).
+- **key fields (§0.8 attribution/evidence — 16, unchanged):** `return_frequency`, `regression_window`, `factor_set:list{Mkt,SMB,HML,UMD,STRev,BAB}`, `factor_source_versions`, `alpha_interpretation`, `standard_error_method(dependence-aware)`, `matched_basket_ref`, `long_short_leg_policy`, `turnover_matching`, `cost_parity_ref`, `beta_matching`, `rebalance_timing`, `benchmark_eligibility`, `missing_factor_behavior`, `residual_alpha_bps`, `residual_alpha_significance`.
+- **field-set clarification:** `run_id` is the per-run identity/context field and `factor_source_versions` remains the second identity component; the §0.8 attribution checklist (the 16 fields above) is unchanged.
 - **identity:** (`run_id`,`factor_source_versions`) · **determinism:** TOLERANCE_NUMERIC · **lineage:** ENT-R0-14, ENT-R0-16, ENT-R0-17.
 - **leakage:** residual alpha is net-of-cost; dependence-aware SEs.
 - **status:** OWNER_APPROVED · BINDING · **tests:** R0-REQ-33. · **refs:** §0.8, V7.4; REQ-VAL-004; ADR-013.
