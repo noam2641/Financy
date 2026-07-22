@@ -147,9 +147,10 @@ Two-field status model (v5 §0.1) applies. Each entity contract assesses: id · 
 
 ### ENT-R0-20 RunLedgerEvent
 - **owning/writer:** FC-R0-04 · **readers:** FC-R0-13, FC-R0-21, audit · **immutability:** append-only, hash-linked · **PIT role:** tamper-evident run trail.
-- **key fields:** `event_id:str`, `event_type:enum`, `prior_event_hash:str`, `payload_hash:str`, `environment_hash:str`, `timestamp:datetime`.
+- **key fields:** `event_id:str`, `event_type:enum{RUN_STARTED,ARTIFACT_WRITTEN,TRIAL_APPENDED,FOLD_BUILT,MODEL_FIT,REPORT_GENERATED}` (closed `RunLedgerEventType`), `prior_event_hash:str`, `payload_hash:str`, `environment_hash:str`, `timestamp:datetime`.
+- **owning-writer enum finalization:** `event_type` is finalized here (per the entity-intro open-enum rule) from the open placeholder `RunLedgerEventTypeValue` to the **closed** `RunLedgerEventType` vocabulary; raw strings and other values are rejected. This closes **only** `RunLedgerEvent.event_type` — no other open placeholder is changed — and preserves the same field name and field order. The TASK-R0-03 implementation is authorized to replace `RunLedgerEventTypeValue` with this closed enum.
 - **identity:** `event_id` · **determinism:** BIT_EXACT · **lineage:** ENT-R0-21.
-- **leakage:** append-only hash chain (no mutation).
+- **leakage:** append-only hash chain (no mutation); genesis prior hash = 64 zero chars; each later event links to the canonical SHA-256 of its predecessor (see FN-R0-31).
 - **status:** OWNER_APPROVED · BINDING · **tests:** R0-REQ-39. · **refs:** V14.4; REQ-SCH-027; ADR-016.
 
 ### ENT-R0-21 RuntimeEnvironmentManifest
