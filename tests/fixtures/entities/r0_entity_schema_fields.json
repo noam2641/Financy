@@ -1,0 +1,86 @@
+{
+  "ENT-R0-01": {
+    "class": "SourceRecord",
+    "fields": ["source_id", "provider", "endpoint", "request_params", "pull_timestamp", "is_estimated_timestamp", "raw_payload_hash"]
+  },
+  "ENT-R0-02": {
+    "class": "RawOHLCVBar",
+    "fields": ["instrument_id", "session_date", "open", "high", "low", "close", "volume", "price_basis", "source_id"]
+  },
+  "ENT-R0-03": {
+    "class": "CorporateActionRecord",
+    "fields": ["instrument_id", "action_type", "ex_date", "split_adjustment_factor", "dividend_amount", "dividend_treatment", "corporate_action_version", "source_id"]
+  },
+  "ENT-R0-04": {
+    "class": "DerivedPriceSeriesMetadata",
+    "fields": ["instrument_id", "as_of_cutoff", "corporate_action_version", "price_basis", "dividend_treatment", "derivation_hash"]
+  },
+  "ENT-R0-05": {
+    "class": "InstrumentMasterRecord",
+    "fields": ["instrument_id", "first_seen", "asset_type", "primary_exchange"]
+  },
+  "ENT-R0-06": {
+    "class": "InstrumentIdentifierRecord",
+    "fields": ["instrument_id", "identifier_type", "identifier_value", "valid_from", "valid_to"]
+  },
+  "ENT-R0-07": {
+    "class": "FixedPITCohortMember",
+    "fields": ["cohort_selection_date", "universe_definition_version", "eligibility_rule_version", "constituent_source_id", "source_as_of", "instrument_id", "inclusion_reason", "exclusion_reason", "terminal_event_policy"]
+  },
+  "ENT-R0-08": {
+    "class": "TerminalEventRecord",
+    "fields": ["instrument_id", "event_type", "event_date", "terminal_return", "terminal_value_source"]
+  },
+  "ENT-R0-09": {
+    "class": "LabelRecord",
+    "fields": ["instrument_id", "prediction_time", "horizon_sessions", "label_value", "price_basis", "target_basis", "maturity_status", "label_available_at", "target_definition_version"]
+  },
+  "ENT-R0-10": {
+    "class": "FeatureSnapshot",
+    "fields": ["snapshot_id", "as_of_date", "schema_hash", "feature_values_checksum", "fitted_transform_ref", "fit_indices_ref"]
+  },
+  "ENT-R0-11": {
+    "class": "InformationInterval",
+    "fields": ["instrument_id", "horizon_sessions", "feature_information_start", "prediction_time", "label_start", "label_end", "label_available_at", "information_interval"]
+  },
+  "ENT-R0-12": {
+    "class": "FoldManifest",
+    "fields": ["fold_id", "train_prediction_times", "test_prediction_times", "embargo_buffer_sessions", "embargo_justification", "no_overlap_asserted"]
+  },
+  "ENT-R0-13": {
+    "class": "TrialRecord",
+    "fields": ["trial_id", "config_hash", "seed", "horizon", "target_basis", "chosen_after_backtest", "created_event_ref"]
+  },
+  "ENT-R0-14": {
+    "class": "ModelArtifactManifest",
+    "fields": ["artifact_id", "producer", "model_family", "train_fold_ref", "hyperparameters", "seed", "artifact_hash", "environment_hash", "oos_eligible"]
+  },
+  "ENT-R0-15": {
+    "class": "CalibrationArtifactManifest",
+    "fields": ["output_name", "output_type", "method", "target", "fit_set_id", "calibration_set_id", "eval_set_id", "units", "metric", "ece_value"]
+  },
+  "ENT-R0-16": {
+    "class": "BenchmarkDefinition",
+    "fields": ["benchmark_id", "components", "beta_adjustment", "cost_model_ref", "rebalance_timing", "eligibility_rule"]
+  },
+  "ENT-R0-17": {
+    "class": "CostModelDefinition",
+    "fields": ["cost_model_id", "commission_bps", "spread_bps", "impact_coefficient", "exit_leg", "proxy_floor_bps", "version"]
+  },
+  "ENT-R0-18": {
+    "class": "FactorAttributionResult",
+    "fields": ["run_id", "return_frequency", "regression_window", "factor_set", "factor_source_versions", "alpha_interpretation", "standard_error_method", "matched_basket_ref", "long_short_leg_policy", "turnover_matching", "cost_parity_ref", "beta_matching", "rebalance_timing", "benchmark_eligibility", "missing_factor_behavior", "residual_alpha_bps", "residual_alpha_significance"]
+  },
+  "ENT-R0-19": {
+    "class": "EvaluationReport",
+    "fields": ["run_id", "forecast_metrics", "calibration_block", "comparator_block", "hurdle_block", "attribution_ref", "benchmark_ref", "outcome", "pre_registration_ref", "environment_hash"]
+  },
+  "ENT-R0-20": {
+    "class": "RunLedgerEvent",
+    "fields": ["event_id", "event_type", "prior_event_hash", "payload_hash", "environment_hash", "timestamp"]
+  },
+  "ENT-R0-21": {
+    "class": "RuntimeEnvironmentManifest",
+    "fields": ["environment_hash", "interpreter_version", "dependency_lockfile_hash", "os_arch", "blas_threading_flags", "random_seeds", "data_vintage_ids"]
+  }
+}
