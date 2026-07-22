@@ -54,17 +54,17 @@ Two-field status model (v5 §0.1) applies. The evaluation report is the terminal
 - **v5 refs:** V1.3. **v4.6 REQ:** R0-BL-006. **ADR:** ADR-002.
 
 ## RPT-R0-05 — Reproducibility evidence (two-tier + environment_hash)
-- **produced_by:** FN-R0-30 (`environment_hash`), FN-R0-29. **linked ENT:** ENT-R0-21 RuntimeEnvironmentManifest.
-- **required content:** **two-tier reproducibility** — **BIT_EXACT** for symbolic artifacts (raw data, canonical schema, corp-action store, cohort manifest, labels, fold manifest, feature-values checksum, trial registry, run ledger) and **TOLERANCE_NUMERIC** for fitted model/calibration/attribution artifacts (reproduced within an approved tolerance). `environment_hash` composition: interpreter version, dependency lockfile hash, OS/arch, BLAS/threading determinism flags, random seeds, data-vintage ids.
-- **invariants:** the report is reproducible from a clean checkout; `environment_hash` is recorded on every run.
-- **required tests:** T-R0 for R0-REQ-36 (two-tier reproducibility + environment_hash composition).
+- **produced_by:** FN-R0-30 (`environment_hash`), FN-R0-29. **linked ENT:** ENT-R0-21 RuntimeEnvironmentManifest (from the non-entity `RuntimeInfo` input — see FN-R0-30).
+- **required content:** **two-tier reproducibility** — **BIT_EXACT** for symbolic artifacts (raw data, canonical schema, corp-action store, cohort manifest, labels, fold manifest, feature-values checksum, trial registry, run ledger) and **TOLERANCE_NUMERIC** for fitted model/calibration/attribution artifacts (reproduced within an approved tolerance). `environment_hash` composition: the exact key set `{interpreter_version, dependency_lockfile_hash, os_arch, blas_threading_flags, random_seeds, data_vintage_ids}`, canonical UTF-8 JSON (sort_keys, `(",",":")`, ensure_ascii=False, allow_nan=False, no whitespace), SHA-256 lowercase 64-hex (see FN-R0-30).
+- **invariants:** the report is reproducible from a clean checkout; `environment_hash` is recorded on every run; no clock/machine/env-var/secret value contributes.
+- **required tests (T-R0-036 precision):** a **fixed `RuntimeInfo` fixture**; an **exact pinned 64-character** environment hash; repeated identical input returns the **same manifest and hash**; every one of the **six** composition fields is present; **changing one field changes the hash**; **duplicate data-vintage IDs are rejected**; **no clock/network/filesystem access**.
 - **v5 refs:** V14.2/V14.3. **v4.6 REQ:** REQ-GATE-001. **ADR:** ADR-016.
 
 ## RPT-R0-06 — Run-ledger evidence
-- **produced_by:** FN-R0-31 (`append_run_event`). **linked ENT:** ENT-R0-20 RunLedgerEvent.
-- **required content:** append-only, hash-linked run events (start, artifact-written, trial-appended, fold-built, model-fit, report-generated); each event carries `environment_hash` and prior-event hash.
-- **invariants:** append-only; tamper-evident hash chain; BIT_EXACT.
-- **required tests:** T-R0 for R0-REQ-39 (run ledger append-only + hash-linked).
+- **produced_by:** FN-R0-31 (`append_run_event`). **linked ENT:** ENT-R0-20 RunLedgerEvent. **state type:** the non-entity `RunLedger = tuple[RunLedgerEvent, ...]` (explicit, immutable; no process-global ledger).
+- **required content:** append-only, hash-linked run events over the **closed** `RunLedgerEventType` vocabulary `{RUN_STARTED, ARTIFACT_WRITTEN, TRIAL_APPENDED, FOLD_BUILT, MODEL_FIT, REPORT_GENERATED}`; each event carries `environment_hash` and `prior_event_hash`; genesis prior hash = 64 zero chars; each later event links to the canonical SHA-256 of its predecessor (canonical event object keys `{event_id, event_type, prior_event_hash, payload_hash, environment_hash, timestamp}`, timestamp ISO-8601 UTC `…ffffffZ`).
+- **invariants:** append-only; tamper-evident hash chain; explicit event_id + tz-aware UTC nondecreasing timestamps supplied by the caller; BIT_EXACT.
+- **required tests (T-R0-039 precision):** empty-ledger genesis append; a second append linked to the **exact first-event hash**; the original tuple remains unchanged; the resulting tuple contains both events in timestamp order; identical event-ID replay is **idempotent**; conflicting reuse of an event ID raises **`LedgerMutationError`**; tampering with `payload_hash`, `prior_event_hash`, `environment_hash`, `timestamp`, or event ordering is detected; a raw string / unsupported event type is rejected; **no clock, UUID, random, filesystem, database, or network access**.
 - **v5 refs:** V14.4. **v4.6 REQ:** REQ-SCH-027. **ADR:** ADR-016.
 
 ## RPT-R0-07 — Pre-registration record
